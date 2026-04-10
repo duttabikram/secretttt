@@ -3,224 +3,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
+<title>For You 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;overflow-x:hidden;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#1a0a14}
 
-body {
-    height: 100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:'Poppins', sans-serif;
-    background: linear-gradient(135deg,#ff9a9e,#fad0c4,#a18cd1);
-    overflow:hidden;
-}
+.bg{position:fixed;inset:0;z-index:0;background:linear-gradient(-45deg,#1a0a14,#1c0e24,#1a0a14,#200e1e);background-size:400% 400%;animation:gradShift 15s ease infinite}
+.bg.success{background:linear-gradient(-45deg,#2a1020,#201018,#1e1210,#221018);animation:gradShift 8s ease infinite}
 
-/* 💖 Floating hearts background */
-body::before {
-    content:"";
-    position:absolute;
-    width:200%;
-    height:200%;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.3) 2px, transparent 2px);
-    background-size: 40px 40px;
-    animation: moveBg 20s linear infinite;
-}
+@keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-@keyframes moveBg {
-    from { transform: translateY(0); }
-    to { transform: translateY(-200px); }
-}
+/* Particles */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.particle{position:absolute;border-radius:50%;animation:floatP ease-in-out infinite}
+@keyframes floatP{0%,100%{transform:translateY(0) translateX(0);opacity:.3}25%{transform:translateY(-20px) translateX(10px);opacity:.6}50%{transform:translateY(-40px) translateX(-5px);opacity:.4}75%{transform:translateY(-20px) translateX(15px);opacity:.5}}
 
-/* 🌸 Glass Card */
-.container {
-    backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.15);
-    padding:50px;
-    border-radius:25px;
-    text-align:center;
-    width:90%;
-    max-width:500px;
-    box-shadow:0 20px 60px rgba(0,0,0,0.3);
-    animation: fadeIn 1s ease;
-}
+/* Glass card */
+.card{position:relative;z-index:10;background:hsla(330,30%,15%,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid hsla(330,50%,60%,.15);box-shadow:0 8px 32px hsla(330,70%,50%,.15);border-radius:1.2rem;padding:2.5rem;max-width:500px;width:92%;max-height:80vh;overflow-y:auto;scrollbar-width:none}
+.card::-webkit-scrollbar{display:none}
 
-@keyframes fadeIn {
-    from {opacity:0; transform:scale(0.8);}
-    to {opacity:1; transform:scale(1);}
-}
+/* Intro screen */
+.intro{text-align:center;cursor:pointer;animation:scaleIn .6s ease-out}
+.intro h1{font-family:'Pacifico',cursive;font-size:2.5rem;color:#d46a9a;margin-bottom:.8rem}
+.intro p{color:#8a7080;font-size:.9rem}
 
-h1 {
-    font-family:'Pacifico', cursive;
-    color:white;
-    min-height:120px;
-}
+/* Story */
+.story-line{color:#e8d0dc;font-size:1.05rem;line-height:1.7;margin-bottom:.15rem;animation:fadeIn .3s ease-out}
+.story-line.special{font-family:'Pacifico',cursive;font-size:1.4rem;color:#d46a9a;margin-top:.5rem}
+.story-line.spacer{height:1rem}
+.typing::after{content:'|';animation:blink .8s ease-in-out infinite;color:#d46a9a}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
 
-/* 📸 Image */
-img {
-    width:100%;
-    border-radius:20px;
-    margin:20px 0;
-    transition:0.4s;
-}
+/* Question */
+.question{text-align:center;padding-top:1.5rem;animation:fadeIn .6s ease-out}
+.question h2{font-family:'Pacifico',cursive;font-size:1.8rem;color:#d46a9a;margin-bottom:2rem}
+.buttons{display:flex;align-items:center;justify-content:center;gap:1.5rem;position:relative;min-height:80px}
 
-/* 🔘 Buttons */
-button {
-    padding:15px 35px;
-    border:none;
-    border-radius:50px;
-    font-size:1.1em;
-    cursor:pointer;
-    margin:10px;
-    transition:0.3s;
-}
+.btn-yes{padding:.8rem 2rem;border-radius:.8rem;border:none;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:#fff;background:linear-gradient(135deg,#d46a9a,#8b5aaa,#d4956a);cursor:pointer;transition:transform .3s;animation:pulseGlow 2s ease-in-out infinite}
+.btn-yes:hover{transform:scale(1.1)}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 20px hsla(330,70%,65%,.3)}50%{box-shadow:0 0 40px hsla(330,70%,65%,.6),0 0 60px hsla(330,70%,65%,.2)}}
 
-#yesBtn {
-    background:#ff4b7d;
-    color:white;
-    box-shadow:0 5px 20px rgba(255,75,125,0.5);
-}
+.btn-no{padding:.8rem 2rem;border-radius:.8rem;background:transparent;border:1px solid #3a2a34;font-family:'Poppins',sans-serif;font-weight:600;font-size:1.1rem;color:#8a7080;cursor:pointer;transition:transform .3s ease-out,border-color .3s}
+.btn-no:hover{border-color:hsla(330,70%,65%,.3)}
 
-#yesBtn:hover {
-    transform:scale(1.1);
-}
+/* Final */
+.final{text-align:center;animation:scaleIn .4s ease-out}
+.final h1{font-family:'Pacifico',cursive;font-size:2.2rem;color:#d46a9a;margin-bottom:1rem}
+.final p{color:#8a7080;font-size:.95rem;margin-top:1rem}
+.final .card{animation:pulseGlow 2s ease-in-out infinite}
 
-#noBtn {
-    background:white;
-    position:absolute;
-    color:#333;
-}
+/* Floating hearts */
+.float-heart{position:fixed;pointer-events:none;z-index:5;font-size:1.5rem;animation:floatH linear forwards}
+@keyframes floatH{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:.8}100%{transform:translateY(-10vh) scale(1);opacity:0}}
 
-/* 💥 Crazy animation */
-@keyframes shake {
-    0% { transform: translate(0,0); }
-    25% { transform: translate(5px,-5px); }
-    50% { transform: translate(-5px,5px); }
-    75% { transform: translate(5px,5px); }
-    100% { transform: translate(0,0); }
+/* Confetti */
+.confetti{position:fixed;pointer-events:none;z-index:100;animation:confettiF linear forwards}
+@keyframes confettiF{0%{transform:translateY(-10vh) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+@media(max-width:500px){
+  .card{padding:1.5rem}
+  .intro h1,.final h1{font-size:2rem}
+  .question h2{font-size:1.4rem}
+  .story-line{font-size:.95rem}
 }
 </style>
 </head>
-
 <body>
 
-<audio id="bgMusic" loop>
-<source src="song.mp3" type="audio/mpeg">
-</audio>
+<div class="bg" id="bg"></div>
+<div class="particles" id="particles"></div>
 
-<div class="container">
-    <h1 id="text"></h1>
-    <img id="image" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
-
-    <div id="buttons">
-        <button id="yesBtn">Yes 💖</button>
-        <button id="noBtn">No 😈</button>
-    </div>
+<div class="card" id="card">
+  <div class="intro" id="intro" onclick="startExperience()">
+    <h1>For You</h1>
+    <p>Tap anywhere to begin 💕</p>
+  </div>
+  <div id="story" style="display:none"></div>
 </div>
 
+<audio id="audio" loop src="song.mp3"></audio>
+
 <script>
+// Particles
+(function(){const c=document.getElementById('particles');for(let i=0;i<20;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*6+2;p.style.width=s+'px';p.style.height=s+'px';p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';p.style.background='hsla(330,70%,65%,'+(Math.random()*.3+.1)+')';p.style.animationDuration=(Math.random()*6+4)+'s';p.style.animationDelay=(Math.random()*5)+'s';c.appendChild(p)}})();
 
-// ===== TEXT EFFECT =====
-const textEl = document.getElementById("text");
-function typeText(text,speed=40){
-    return new Promise(res=>{
-        textEl.innerHTML="";
-        let i=0;
-        function t(){
-            if(i<text.length){
-                textEl.innerHTML+=text[i];
-                i++;
-                setTimeout(t,speed);
-            } else res();
-        }
-        t();
-    });
+const lines=[
+  {t:"Hey you... 💕",d:800},
+  {t:"In a world full of people…",d:1200},
+  {t:"somehow I found you.",d:1000},
+  {t:"",d:600},
+  {t:'Every time I hear "Still With You"…',d:1200},
+  {t:"it reminds me of you 🎶",d:1000},
+  {t:"",d:600},
+  {t:"Your smile does something to me.",d:1000},
+  {t:"The way you talk, the way you laugh…",d:1200},
+  {t:"It all just stays with me.",d:1000},
+  {t:"",d:600},
+  {t:"I know Jungkook is your favorite 😏",d:1200},
+  {t:"That time you sent me his pic…",d:1000},
+  {t:"I was smiling because of you, not him ❤️",d:1200},
+  {t:"",d:600},
+  {t:"You're learning to heal people…",d:1200},
+  {t:"but somehow, you healed me too.",d:1200},
+  {t:"Without even trying. Without even knowing.",d:1200},
+  {t:"",d:600},
+  {t:"Moi tumak bhal pau ❤️",d:1500,s:true},
+  {t:"",d:600},
+  {t:"Maybe we come from different places…",d:1000},
+  {t:"but you feel like home.",d:1200},
+  {t:"",d:800},
+  {t:"So… my heart healer…",d:1500,s:true}
+];
+
+const noTexts=["No 😈","Are you sure? 🥺","Think again 😭","Please? 🥹","Last chance! 💔","You can't escape 😏","Try harder 😈","Nope 💕"];
+let noIdx=0, lineIdx=0;
+
+function startExperience(){
+  document.getElementById('intro').style.display='none';
+  document.getElementById('story').style.display='block';
+  const a=document.getElementById('audio');a.volume=.5;a.play().catch(()=>{});
+  typeLine();
 }
 
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-// ===== STORY =====
-async function start(){
-    await typeText("Hey you... 💕");
-    await sleep(1500);
-
-    await typeText("Every time I hear this song... 🎶");
-    await sleep(2000);
-
-    await typeText("It reminds me of you ❤️");
-    await sleep(2000);
-
-    await typeText("And yeah... even Jungkook can't beat you 😏");
-    await sleep(2000);
-
-    await typeText("You healed me without even trying 💫");
-    await sleep(2500);
-
-    await typeText("Moi tumak bhal pau ❤️");
-    await sleep(2500);
-
-    await typeText("Will you be mine? 💖");
-}
-start();
-
-// ===== MUSIC =====
-document.body.addEventListener("click",()=>{
-    document.getElementById("bgMusic").play();
-},{once:true});
-
-// ===== CRAZY NO BUTTON =====
-const noBtn=document.getElementById("noBtn");
-let scale=1;
-
-noBtn.addEventListener("mouseover",()=>{
-    const x=Math.random()*400-200;
-    const y=Math.random()*300-150;
-
-    scale-=0.1;
-    if(scale<0.4) scale=0.4;
-
-    noBtn.style.transform=`translate(${x}px,${y}px) scale(${scale}) rotate(${Math.random()*360}deg)`;
-    noBtn.style.animation="shake 0.3s";
-});
-
-// ===== YES BUTTON =====
-document.getElementById("yesBtn").onclick=async ()=>{
-    document.getElementById("buttons").style.display="none";
-
-    document.body.style.background="linear-gradient(135deg,#ff758c,#ff7eb3)";
-
-    await typeText("I knew it 😏❤️",40);
-
-    confetti();
-};
-
-// ===== CONFETTI =====
-function confetti(){
-    for(let i=0;i<150;i++){
-        let c=document.createElement("div");
-        c.style.position="fixed";
-        c.style.width="8px";
-        c.style.height="8px";
-        c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-        c.style.left=Math.random()*100+"%";
-        c.style.top="-10px";
-        document.body.appendChild(c);
-
-        let fall=setInterval(()=>{
-            c.style.top=parseFloat(c.style.top)+5+"px";
-            if(parseFloat(c.style.top)>window.innerHeight){
-                clearInterval(fall);
-                c.remove();
-            }
-        },20);
-    }
+function typeLine(){
+  if(lineIdx>=lines.length){showQuestion();return}
+  const l=lines[lineIdx];
+  if(l.t===""){
+    const sp=document.createElement('div');sp.className='story-line spacer';
+    document.getElementById('story').appendChild(sp);
+    lineIdx++;scrollCard();setTimeout(typeLine,l.d);return;
+  }
+  const el=document.createElement('p');
+  el.className='story-line typing'+(l.s?' special':'');
+  document.getElementById('story').appendChild(el);
+  let i=0;
+  const iv=setInterval(()=>{
+    if(i<l.t.length){el.textContent=l.t.slice(0,i+1);i++;scrollCard()}
+    else{clearInterval(iv);el.classList.remove('typing');lineIdx++;setTimeout(typeLine,l.d)}
+  },40);
 }
 
+function scrollCard(){const c=document.getElementById('card');c.scrollTop=c.scrollHeight}
+
+function showQuestion(){
+  const q=document.createElement('div');q.className='question';
+  q.innerHTML='<h2>Will you be mine? 💖</h2><div class="buttons"><button class="btn-yes" onclick="sayYes()">Yes 💖</button><button class="btn-no" id="btnNo" onmouseenter="moveNo()" ontouchstart="moveNo()" onclick="moveNo()">No 😈</button></div>';
+  document.getElementById('story').appendChild(q);scrollCard();
+}
+
+function moveNo(){
+  const b=document.getElementById('btnNo');
+  const x=(Math.random()-.5)*250,y=(Math.random()-.5)*150;
+  noIdx=Math.min(noIdx+1,noTexts.length-1);
+  b.style.transform='translate('+x+'px,'+y+'px) scale('+Math.max(.6,1-noIdx*.05)+') rotate('+noIdx*5+'deg)';
+  b.textContent=noTexts[noIdx];
+}
+
+function sayYes(){
+  document.getElementById('bg').classList.add('success');
+  document.getElementById('card').innerHTML='<div class="final"><h1>I knew you\'d say yes 😏❤️</h1><p>Now you\'re stuck with this Bengali boy forever 💕</p></div>';
+  document.getElementById('card').style.animation='pulseGlow 2s ease-in-out infinite';
+  spawnConfetti();spawnHearts();
+}
+
+function spawnConfetti(){
+  const cols=['#d46a9a','#8b5aaa','#d4956a','#e07080','#d4b86a','#6ab4b4'];
+  for(let i=0;i<80;i++){const p=document.createElement('div');p.className='confetti';
+  p.style.left=Math.random()*100+'vw';p.style.width=(Math.random()*8+6)+'px';p.style.height=(Math.random()*8+6)+'px';
+  p.style.background=cols[Math.floor(Math.random()*cols.length)];p.style.borderRadius=Math.random()>.5?'50%':'2px';
+  p.style.animationDuration=(Math.random()*2+2)+'s';p.style.animationDelay=(Math.random())+'s';
+  document.body.appendChild(p);setTimeout(()=>p.remove(),4000)}
+}
+
+function spawnHearts(){
+  const e=['💖','💕','💗','✨','💝'];
+  const iv=setInterval(()=>{const h=document.createElement('div');h.className='float-heart';
+  h.textContent=e[Math.floor(Math.random()*e.length)];h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=(Math.random()*3+4)+'s';document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000)},400);
+  setTimeout(()=>clearInterval(iv),15000);
+}
 </script>
-
 </body>
 </html>
