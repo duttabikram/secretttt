@@ -146,6 +146,28 @@ function typeLine(){
   },40);
 }
 
+function typeFinal(id, text, speed){
+  return new Promise(resolve => {
+    const el = document.getElementById(id);
+    let i = 0;
+
+    function typing(){
+      if(i < text.length){
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      } else {
+        resolve();
+      }
+    }
+    typing();
+  });
+}
+
+function sleep(ms){
+  return new Promise(r => setTimeout(r, ms));
+}  
+
 function scrollCard(){const c=document.getElementById('card');c.scrollTop=c.scrollHeight}
 
 function showQuestion(){
@@ -154,68 +176,53 @@ function showQuestion(){
   document.getElementById('story').appendChild(q);scrollCard();
 }
 
-function moveNo(){
-  const b = document.getElementById('btnNo');
+function moveNo(){ const b=document.getElementById('btnNo'); const x=(Math.random()-.5)*250,y=(Math.random()-.5)*150; noIdx=Math.min(noIdx+1,noTexts.length-1); b.style.transform='translate('+x+'px,'+y+'px) scale('+Math.max(.6,1-noIdx*.05)+') rotate('+noIdx*5+'deg)'; b.textContent=noTexts[noIdx]; }
 
-  // 👉 random movement with easing feel
-  const x = (Math.random() - 0.5) * 320;
-  const y = (Math.random() - 0.5) * 220;
+async function sayYes(){
+  const bg = document.getElementById('bg');
+  const card = document.getElementById('card');
 
-  // 👉 increase difficulty
-  noIdx = Math.min(noIdx + 1, noTexts.length - 1);
+  // 🌸 background transformation
+  bg.classList.add('success');
 
-  const scale = Math.max(0.4, 1 - noIdx * 0.06);
-  const rotate = (Math.random() > 0.5 ? 1 : -1) * (20 + noIdx * 15);
+  // ✨ zoom out effect (cinematic)
+  card.style.transition = "all 0.6s ease";
+  card.style.transform = "scale(0.85)";
+  card.style.opacity = "0";
 
-  // 👉 smooth animation
-  b.style.transition = "transform 0.25s ease-out";
-  b.style.transform = `translate(${x}px,${y}px) scale(${scale}) rotate(${rotate}deg)`;
+  setTimeout(async () => {
 
-  // 👉 text update
-  b.textContent = noTexts[noIdx];
+    // 💖 new content (clean + emotional)
+    card.innerHTML = `
+      <div class="final" style="text-align:center;">
+        <h1 style="font-size:2.3em;">💖 She said yes! 💖</h1>
 
-  // 💥 small screen bounce (feels alive)
-  document.body.style.transform = "scale(1.01)";
-  setTimeout(() => {
-    document.body.style.transform = "scale(1)";
-  }, 120);
+        <p id="line1" style="font-size:1.2em; margin-top:10px;"></p>
+        <p id="line2" style="margin-top:10px;"></p>
+        <p id="line3" style="margin-top:15px; opacity:0.85;"></p>
+      </div>
+    `;
 
-  // 💀 CRAZY MODE: spawn fake buttons after few tries
-  if(noIdx === 3){
-    for(let i=0;i<2;i++){
-      let fake = document.createElement("button");
-      fake.innerText = "No 😈";
-      fake.className = "btn-no";
-      fake.style.position = "absolute";
-      fake.style.left = Math.random()*80 + "%";
-      fake.style.top = Math.random()*80 + "%";
-      fake.style.opacity = "0.7";
-      fake.onclick = moveNo;
+    card.style.transform = "scale(1)";
+    card.style.opacity = "1";
 
-      document.body.appendChild(fake);
+    // 🎉 effects start immediately
+    spawnConfetti();
+    spawnHearts();
 
-      // fade out effect
-      setTimeout(()=>{
-        fake.style.transition = "opacity 0.5s";
-        fake.style.opacity = "0";
-        setTimeout(()=>fake.remove(),500);
-      },1500);
-    }
-  }
+    // 💬 slow cinematic text reveal
+    await typeFinal("line1", "তুমি মোৰ ফেভাৰিট… ❤️", 50);
+    await sleep(800);
 
-  // 😈 ULTRA: near impossible after many tries
-  if(noIdx > 5){
-    const extraX = (Math.random() - 0.5) * 500;
-    const extraY = (Math.random() - 0.5) * 300;
-    b.style.transform += ` translate(${extraX}px,${extraY}px)`;
-  }
-}
+    await typeFinal("line2", "আৰু মই তোমাৰ পাগল 😄❤️", 50);
+    await sleep(800);
 
-function sayYes(){
-  document.getElementById('bg').classList.add('success');
-  document.getElementById('card').innerHTML='<div class="final"><h1>I knew you\'d say yes 😏❤️</h1><p>Now you\'re stuck with this Bengali boy forever 💕</p></div>';
-  document.getElementById('card').style.animation='pulseGlow 2s ease-in-out infinite';
-  spawnConfetti();spawnHearts();
+    await typeFinal("line3", "From Bengal to Assam… our story just began 💫", 40);
+
+  }, 500);
+
+  // ✨ glow pulse
+  card.style.animation = "pulseGlow 2s ease-in-out infinite";
 }
 
 function spawnConfetti(){
