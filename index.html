@@ -118,15 +118,17 @@ const lines=[
   {t:"So… my heart healer…",d:1500,s:true}
 ];
 
-const noTexts = [
+// No button
+let noClicks = 0;
+const noMsgs = [
   "No 😈",
-  "Sure niki? 🥺",
-  "abar bhabo 😭",
-  "Please... ebar accept kori diba? 🥹",
-  "sesh sujog! 💔",
-  "Palaibo nuwariba 😏",
-  "Try harder... aro try kora 😈",
-  "Nope... nohoi 😄💕"
+  "Are you sure? 🥺",
+  "Think again! 💔",
+  "Wrong button! 😤",
+  "Can't catch me! 🏃‍♂️",
+  "Nope! 🙅",
+  "Try harder! 😜",
+  "Impossible! ✨"
 ];
 let noIdx=0, lineIdx=0;
 
@@ -159,16 +161,45 @@ function scrollCard(){const c=document.getElementById('card');c.scrollTop=c.scro
 
 function showQuestion(){
   const q=document.createElement('div');q.className='question';
-  q.innerHTML='<h2>তুমি মোৰ হ’বানে? 💖</h2><div class="buttons"><button class="btn-yes" onclick="sayYes()">Yes 💖</button><button class="btn-no" id="btnNo" onmouseenter="moveNo()" ontouchstart="moveNo()" onclick="moveNo()">No 😈</button></div>';
+  q.innerHTML='<h2>তুমি মোৰ হ’বানে? 💖</h2><div class="buttons"><button class="btn-yes" onclick="sayYes()">Yes 💖</button><button class="btn-no" id="btnNo" 
+  onmouseenter="runAway()" 
+  ontouchstart="runAway()" 
+  onclick="runAway()">
+  No 😈
+</button></div>';
   document.getElementById('story').appendChild(q);scrollCard();
 }
 
-function moveNo(){
-  const b=document.getElementById('btnNo');
-  const x=(Math.random()-.5)*250,y=(Math.random()-.5)*150;
-  noIdx=Math.min(noIdx+1,noTexts.length-1);
-  b.style.transform='translate('+x+'px,'+y+'px) scale('+Math.max(.6,1-noIdx*.05)+') rotate('+noIdx*5+'deg)';
-  b.textContent=noTexts[noIdx];
+function runAway(){
+  const b = document.getElementById('btnNo');
+
+  const x = (Math.random() - 0.5) * 300;
+  const y = (Math.random() - 0.5) * 200;
+
+  noClicks++;
+
+  const s = Math.max(0.4, 1 - noClicks * 0.08);
+  const r = (Math.random() > 0.5 ? 1 : -1) * 180 * noClicks;
+
+  b.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;
+
+  b.textContent = noMsgs[Math.min(noClicks, noMsgs.length - 1)];
+
+  // 💀 ADD IT HERE (after noClicks++)
+  if(noClicks === 3){
+    for(let i=0;i<3;i++){
+      let fake = document.createElement("button");
+      fake.innerText = "No 😈";
+      fake.className = "btn-no";
+      fake.style.position = "absolute";
+      fake.style.left = Math.random()*80 + "%";
+      fake.style.top = Math.random()*80 + "%";
+      fake.onclick = runAway;
+      document.body.appendChild(fake);
+
+      setTimeout(()=>fake.remove(),2000);
+    }
+  }
 }
 
 function sayYes(){
