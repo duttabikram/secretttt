@@ -118,18 +118,7 @@ const lines=[
   {t:"So… my heart healer…",d:1500,s:true}
 ];
 
-// No button
-let noClicks = 0;
-const noMsgs = [
-  "No 😈",
-  "Are you sure? 🥺",
-  "Think again! 💔",
-  "Wrong button! 😤",
-  "Can't catch me! 🏃‍♂️",
-  "Nope! 🙅",
-  "Try harder! 😜",
-  "Impossible! ✨"
-];
+const noTexts=["No 😈","Are you sure? 🥺","Think again 😭","Please? 🥹","Last chance! 💔","You can't escape 😏","Try harder 😈","Nope 💕"];
 let noIdx=0, lineIdx=0;
 
 function startExperience(){
@@ -161,50 +150,70 @@ function scrollCard(){const c=document.getElementById('card');c.scrollTop=c.scro
 
 function showQuestion(){
   const q=document.createElement('div');q.className='question';
-  q.innerHTML='<h2>তুমি মোৰ হ’বানে? 💖</h2><div class="buttons"><button class="btn-yes" onclick="sayYes()">Yes 💖</button><button class="btn-no" id="btnNo" 
-  onmouseenter="runAway()" 
-  ontouchstart="runAway()" 
-  onclick="runAway()">
-  No 😈
-</button></div>';
+  q.innerHTML='<h2>তুমি মোৰ হ’বানে? 💖</h2><div class="buttons"><button class="btn-yes" onclick="sayYes()">Yes 💖</button><button class="btn-no" id="btnNo" onmouseenter="moveNo()" ontouchstart="moveNo()" onclick="moveNo()">No 😈</button></div>';
   document.getElementById('story').appendChild(q);scrollCard();
 }
 
-function runAway(){
+function moveNo(){
   const b = document.getElementById('btnNo');
 
-  const x = (Math.random() - 0.5) * 300;
-  const y = (Math.random() - 0.5) * 200;
+  // 👉 random movement with easing feel
+  const x = (Math.random() - 0.5) * 320;
+  const y = (Math.random() - 0.5) * 220;
 
-  noClicks++;
+  // 👉 increase difficulty
+  noIdx = Math.min(noIdx + 1, noTexts.length - 1);
 
-  const s = Math.max(0.4, 1 - noClicks * 0.08);
-  const r = (Math.random() > 0.5 ? 1 : -1) * 180 * noClicks;
+  const scale = Math.max(0.4, 1 - noIdx * 0.06);
+  const rotate = (Math.random() > 0.5 ? 1 : -1) * (20 + noIdx * 15);
 
-  b.style.transform = `translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;
+  // 👉 smooth animation
+  b.style.transition = "transform 0.25s ease-out";
+  b.style.transform = `translate(${x}px,${y}px) scale(${scale}) rotate(${rotate}deg)`;
 
-  b.textContent = noMsgs[Math.min(noClicks, noMsgs.length - 1)];
+  // 👉 text update
+  b.textContent = noTexts[noIdx];
 
-  // 💀 ADD IT HERE (after noClicks++)
-  if(noClicks === 3){
-    for(let i=0;i<3;i++){
+  // 💥 small screen bounce (feels alive)
+  document.body.style.transform = "scale(1.01)";
+  setTimeout(() => {
+    document.body.style.transform = "scale(1)";
+  }, 120);
+
+  // 💀 CRAZY MODE: spawn fake buttons after few tries
+  if(noIdx === 3){
+    for(let i=0;i<2;i++){
       let fake = document.createElement("button");
       fake.innerText = "No 😈";
       fake.className = "btn-no";
       fake.style.position = "absolute";
       fake.style.left = Math.random()*80 + "%";
       fake.style.top = Math.random()*80 + "%";
-      fake.onclick = runAway;
+      fake.style.opacity = "0.7";
+      fake.onclick = moveNo;
+
       document.body.appendChild(fake);
 
-      setTimeout(()=>fake.remove(),2000);
+      // fade out effect
+      setTimeout(()=>{
+        fake.style.transition = "opacity 0.5s";
+        fake.style.opacity = "0";
+        setTimeout(()=>fake.remove(),500);
+      },1500);
     }
+  }
+
+  // 😈 ULTRA: near impossible after many tries
+  if(noIdx > 5){
+    const extraX = (Math.random() - 0.5) * 500;
+    const extraY = (Math.random() - 0.5) * 300;
+    b.style.transform += ` translate(${extraX}px,${extraY}px)`;
   }
 }
 
 function sayYes(){
   document.getElementById('bg').classList.add('success');
-  document.getElementById('card').innerHTML='<div class="final"><h1>💖 She said yes! 💖</h1><p>Tumi amar favourite, aru moi tumar idiot 😄❤️</p></div>';
+  document.getElementById('card').innerHTML='<div class="final"><h1>I knew you\'d say yes 😏❤️</h1><p>Now you\'re stuck with this Bengali boy forever 💕</p></div>';
   document.getElementById('card').style.animation='pulseGlow 2s ease-in-out infinite';
   spawnConfetti();spawnHearts();
 }
